@@ -1,35 +1,51 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import MainContent from './components/MainContect/index'
+import { useCharacterSearch } from './hooks/useCharacterSearch'
 
 function App() {
-  const [count, setCount] = useState(0)
+	const [filters, setFilters] = useState({
+		name: '',
+		status: '',
+		species: '',
+		type: '',
+		gender: '',
+	})
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	 const { characters, isLoading, error, search } = useCharacterSearch()
+
+  const handleInputChange = (field, value) => {
+    setFilters(prev => ({ ...prev, [field]: value }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    await search(filters) // Используем функцию из хука
+  }
+
+
+	return (
+		<div className='min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900'>
+			<header className='text-center py-12 px-4'>
+				<div className='max-w-4xl mx-auto'>
+					<h1 className='text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-4'>
+						Вселенная Рика и Морти
+					</h1>
+					<p className='text-purple-200 text-xl md:text-2xl font-light'>
+						Найди своих любимых персонажей из мультивселенной
+					</p>
+				</div>
+			</header>
+
+			<MainContent
+				filters={filters}
+				onInputChange={handleInputChange}
+				onSubmit={handleSubmit}
+				characters={characters}
+				isLoading={isLoading}
+				error={error}
+			/>
+		</div>
+	)
 }
 
 export default App
