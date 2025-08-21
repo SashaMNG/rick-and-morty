@@ -11,17 +11,16 @@ function App() {
 		gender: '',
 	})
 
-	 const { characters, isLoading, error, search } = useCharacterSearch()
+	const { characters, isLoading, error, search } = useCharacterSearch()
 
-  const handleInputChange = (field, value) => {
-    setFilters(prev => ({ ...prev, [field]: value }))
-  }
+	const handleInputChange = (field, value) => {
+		setFilters(prev => ({ ...prev, [field]: value }))
+	}
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    await search(filters) // Используем функцию из хука
-  }
-
+	const handleSubmit = async e => {
+		e.preventDefault()
+		await search(filters)
+	}
 
 	return (
 		<div className='min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900'>

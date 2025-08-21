@@ -1,4 +1,12 @@
-const MainContent = ({ filters, onInputChange, onSubmit, characters, isLoading, error }) => {
+const MainContent = ({
+	filters,
+	onInputChange,
+	onSubmit,
+	characters,
+	isLoading,
+	error,
+}) => {
+	
 	return (
 		<main className='flex-1 flex flex-col items-center justify-center px-4 pb-12'>
 			<div className='w-full max-w-4xl bg-slate-800/40 backdrop-blur-lg rounded-3xl p-8 md:p-10 shadow-2xl border border-purple-500/20'>
@@ -94,73 +102,77 @@ const MainContent = ({ filters, onInputChange, onSubmit, characters, isLoading, 
 					<div className='text-center pt-6'>
 						<button
 							type='submit'
-              disabled={isLoading} 
+							disabled={isLoading}
 							className='bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white font-bold text-lg py-4 px-12 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40'
 						>
-							 {isLoading ? 'Поиск...' : 'Найти персонажей'}
+							{isLoading ? 'Поиск...' : 'Найти персонажей'}
 						</button>
 					</div>
 				</form>
 			</div>
 
-      {isLoading && (
-    <div className="text-center py-12">
-      <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-cyan-500 border-t-transparent mb-4"></div>
-      <p className="text-cyan-300 text-lg">Загружаем персонажей...</p>
-    </div>
-  )}
+			{isLoading && (
+				<div className='text-center py-12'>
+					<div className='inline-block animate-spin rounded-full h-12 w-12 border-4 border-cyan-500 border-t-transparent mb-4'></div>
+					<p className='text-cyan-300 text-lg'>Загружаем персонажей...</p>
+				</div>
+			)}
 
-{error && (
-    <div className="text-center py-12">
-      <div className="text-red-400 text-4xl mb-4">⚠️</div>
-      <h3 className="text-2xl font-semibold text-red-300 mb-2">Ошибка</h3>
-      <p className="text-red-200">{error}</p>
-    </div>
-  )}
+			{error && (
+				<div className='text-center py-12'>
+					<div className='text-red-400 text-4xl mb-4'>⚠️</div>
+					<h3 className='text-2xl font-semibold text-red-300 mb-2'>Ошибка</h3>
+					<p className='text-red-200'>{error}</p>
+				</div>
+			)}
 
-		 {!isLoading && !error && characters.length > 0 && (
-    <div>
-      <div className="text-center mb-8">
-        <h3 className="text-3xl font-bold text-cyan-400 mb-2">
-          Найдено персонажей: {characters.length}
-        </h3>
-        <p className="text-purple-200">Результаты поиска</p>
-      </div>
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {characters.map(character => (
-          <div key={character.id} className="bg-slate-800/50 rounded-2xl p-4 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300">
-            <img 
-              src={character.image} 
-              alt={character.name}
-              className="w-full h-48 object-cover rounded-xl mb-4"
-            />
-            <h4 className="text-lg font-semibold text-cyan-300 mb-2">
-              {character.name}
-            </h4>
-            <div className="space-y-1 text-sm text-purple-200">
-              <p>Статус: {character.status}</p>
-              <p>Раса: {character.species}</p>
-              <p>Пол: {character.gender}</p>
-              {character.type && <p>Тип: {character.type}</p>}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )}
+			{!isLoading && !error && characters.length > 0 && (
+				<div>
+					<div className='text-center mb-8'>
+						<h3 className='text-3xl font-bold text-cyan-400 mb-2'>
+							Найдено персонажей: {characters.length}
+						</h3>
+						<p className='text-purple-200'>Результаты поиска</p>
+					</div>
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+						{characters.map(character => (
+							<div
+								key={character.id}
+								className='bg-slate-800/50 rounded-2xl p-4 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300'
+							>
+								{/* onClick={() => handleCardClick(character)} */}
+								<img
+									src={character.image}
+									alt={character.name}
+									className='w-full h-48 object-cover rounded-xl mb-4'
+								/>
+								<h4 className='text-lg font-semibold text-cyan-300 mb-2'>
+									{character.name}
+								</h4>
+								<div className='space-y-1 text-sm text-purple-200'>
+									<p>Статус: {character.status}</p>
+									<p>Раса: {character.species}</p>
+									<p>Пол: {character.gender}</p>
+									{character.type && <p>Тип: {character.type}</p>}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			)}
 
-  {!isLoading && !error && characters.length === 0 && (
-    <div className="text-center py-16">
-      <div className="text-cyan-400 text-5xl mb-4">🔍</div>
-      <h3 className="text-2xl font-semibold text-cyan-300 mb-2">
-        Персонажи не найдены
-      </h3>
-      <p className="text-purple-200">
-        Попробуйте изменить параметры поиска
-      </p>
-    </div>
-  )}
-
+			{!isLoading && !error && characters.length === 0 && (
+				<div className='text-center py-16'>
+					<div className='text-cyan-400 text-5xl mb-4'>🔍</div>
+					<h3 className='text-2xl font-semibold text-cyan-300 mb-2'>
+						Персонажи не найдены
+					</h3>
+					<p className='text-purple-200'>
+						Попробуйте изменить параметры поиска
+					</p>
+				</div>
+			)}
+			
 		</main>
 	)
 }
